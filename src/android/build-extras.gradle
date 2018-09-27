@@ -23,7 +23,7 @@ repositories {
 }
 
 dependencies {
-    compile 'io.proximi.proximiiolibrary:proximiiolibrary:2.7.+'
+    compile 'io.proximi.proximiiolibrary:proximiiolibrary:2.7.6'
 }
 
 android {
