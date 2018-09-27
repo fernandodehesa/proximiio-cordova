@@ -20,7 +20,7 @@
 #import <Proximiio/ProximiioInputType.h>
 #import <Proximiio/ProximiioCustomLocation.h>
 #import <Proximiio/ProximiioBufferSize.h>
-#import <Proximiio/ProximiioManager.h>
+#import <Proximiio/ProximiioEventType.h>
 
 
 //! Project version number for Proximiio.
@@ -47,16 +47,32 @@ FOUNDATION_EXPORT const unsigned char ProximiioVersionString[];
 - (void)authWithToken:(NSString *)token callback:(void (^)(ProximiioState result))callback;
 - (void)authWithEmail:(NSString *)email password:(NSString *)password callback:(void (^)(ProximiioState result))callback;
 
+- (void)registerWithEmail:(NSString *)email
+                 password:(NSString *)password
+                firstName:(NSString *)firstName
+                 lastName:(NSString *)lastName
+                  company:(NSString *)company
+               background:(NSString *)background
+                  country:(NSString *)country
+                 callback:(void (^)(ProximiioState result))callback;
+
+- (void)setUpdateInterval:(double)updateInterval;
 - (void)addCustomiBeaconUUID:(NSString*)uuid;
-- (void)selectApplication:(NSString *)uuid;
 - (void)enable;
 - (void)disable;
-+ (id)sharedInstance;
+- (void)selectApplication:(NSString *)uuid;
+- (ProximiioApplication *)application;
++ (Proximiio*)sharedInstance;
 - (CBManagerState)btState;
 
+
+- (void)handlePush:(NSString *)title;
+- (void)handleOutput:(NSObject *)payload;
+- (void)handleFloorChange:(ProximiioFloor *)floor;
+
 @property (weak) id delegate;
-@property (nonatomic) id instance;
 @property (nonatomic, strong) NSString *visitorId;
+@property (readonly) BOOL remoteMode;
 
 // management methods
 
@@ -65,7 +81,6 @@ FOUNDATION_EXPORT const unsigned char ProximiioVersionString[];
 -(NSArray *)departments;
 -(NSArray *)geofences;
 -(NSArray *)applications;
-
 
 - (BOOL)addPlace:(NSString *)name location:(CLLocationCoordinate2D)location
          address:(NSString *)address
@@ -205,14 +220,6 @@ indoorAtlasApiKeySecret:(NSString*)iaApiKeySecret
 - (void)deleteGeofence:(NSString *)uuid withCallback:(void (^)(BOOL success, NSError* error))callback;
 - (void)deleteInput:(NSString *)uuid withCallback:(void (^)(BOOL success, NSError* error))callback;
 
-- (void)registerWithEmail:(NSString *)email
-                 password:(NSString *)password
-                firstName:(NSString *)firstName
-                 lastName:(NSString *)lastName
-                  company:(NSString *)company
-               background:(NSString *)background
-                  country:(NSString *)country
-                 callback:(void (^)(ProximiioState result))callback;
 @end
 
 @protocol ProximiioDelegate
@@ -232,6 +239,7 @@ indoorAtlasApiKeySecret:(NSString*)iaApiKeySecret
 
 - (BOOL)proximiioHandlePushMessage:(NSString*)title;
 - (void)proximiioHandleOutput:(NSObject*)payload;
+- (NSDictionary*)proximiioProvideMetadataForEventWithType:(ProximiioEventType)eventType geofence:(ProximiioGeofence*)geofence location:(ProximiioLocation *)location;
 
 - (void)onProximiioReady;
 - (void)onProximiioAuthorizationInvalid;
