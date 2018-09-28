@@ -19,7 +19,7 @@ import io.proximi.proximiiolibrary.ProximiioIBeacon;
 import io.proximi.proximiiolibrary.ProximiioInput;
 import io.proximi.proximiiolibrary.ProximiioListener;
 import io.proximi.proximiiolibrary.ProximiioFloor;
-import io.proximi.proximiiolibrary.ProximiioOptions;
+//import io.proximi.proximiiolibrary.ProximiioOptions;
 import android.Manifest;
 import android.os.Build;
 import android.content.pm.PackageManager;
