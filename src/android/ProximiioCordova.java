@@ -85,12 +85,13 @@ public class ProximiioCordova extends CordovaPlugin implements OnRequestPermissi
     }
 
     private void initProximiio() {
-        //proximiio = new ProximiioAPI("ProximiioCordovaAPI", activity);
-
+        proximiio = new ProximiioAPI("ProximiioCordovaAPI", activity);
+        /*
         ProximiioOptions options = new ProximiioOptions()
         .setNotificationMode(ProximiioOptions.NotificationMode.ENABLED);
 
         proximiio = new ProximiioAPI("ProximiioCordovaAPI", activity, options);
+        */
 
         proximiio.setActivity(activity);
         listener = new ProximiioListener() {
@@ -125,7 +126,8 @@ public class ProximiioCordova extends CordovaPlugin implements OnRequestPermissi
             }
 
             @Override
-            public void loggedIn(boolean online, String auth) {
+            //public void loggedIn(boolean online, String auth) {
+            public void loggedIn(boolean online) {
                 String action = "javascript:proximiio.proximiioReady(\"" + proximiio.getVisitorID() + "\")";
                 log("initProximiio", action);
                 loadUrl(action);
