@@ -19,7 +19,7 @@ import io.proximi.proximiiolibrary.ProximiioIBeacon;
 import io.proximi.proximiiolibrary.ProximiioInput;
 import io.proximi.proximiiolibrary.ProximiioListener;
 import io.proximi.proximiiolibrary.ProximiioFloor;
-//import io.proximi.proximiiolibrary.ProximiioOptions;
+import io.proximi.proximiiolibrary.ProximiioOptions;
 import android.Manifest;
 import android.os.Build;
 import android.content.pm.PackageManager;
@@ -85,13 +85,13 @@ public class ProximiioCordova extends CordovaPlugin implements OnRequestPermissi
     }
 
     private void initProximiio() {
-        proximiio = new ProximiioAPI("ProximiioCordovaAPI", activity);
-        /*
+        //proximiio = new ProximiioAPI("ProximiioCordovaAPI", activity);
+        
         ProximiioOptions options = new ProximiioOptions()
         .setNotificationMode(ProximiioOptions.NotificationMode.ENABLED);
 
         proximiio = new ProximiioAPI("ProximiioCordovaAPI", activity, options);
-        */
+        
 
         proximiio.setActivity(activity);
         listener = new ProximiioListener() {
@@ -126,8 +126,8 @@ public class ProximiioCordova extends CordovaPlugin implements OnRequestPermissi
             }
 
             @Override
-            //public void loggedIn(boolean online, String auth) {
-            public void loggedIn(boolean online) {
+            public void loggedIn(boolean online, String auth) {
+            //public void loggedIn(boolean online) {
                 String action = "javascript:proximiio.proximiioReady(\"" + proximiio.getVisitorID() + "\")";
                 log("initProximiio", action);
                 loadUrl(action);
